@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <title>Bakery Shop</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css'>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img width="80" th:src="@{/images/logo.png}" src="/src/main/resources/static/images/logo.png"></img>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="myNavbar">
+                <ul class="nav navbar-nav navbar-right">
+                    <li style="font-size: medium"><a th:href="@{/admin}" href="#">Admin-Home</a></li>
+                    <li style="font-size: medium"><a sec:authorize="isAuthenticated()" th:href="@{/logout}"
+                            href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <a th:href="@{/admin/products/add}" style="margin: 20px 0" class="btn btn-primary">Add Product</a>
+        <table class="table">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col">SN</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Preview</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Update</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr th:each="product, iStat : ${products}">
+                    <th scope="row" th:text="${iStat.index + 1}">1</th>
+                    <td th:text="${product.name}">Larry</td>
+                    <td th:text="${product.category.name}">Larry</td>
+                    <td><img src="" height="100px" width="100px" th:src="@{${'/productImages/' + product.imageName}}">
+                    </td>
+
+                    <td><a href="" th:href="@{/admin/product/delete/{id}(id=${product.id})}"
+                            class="btn btn-danger">Delete</a></td>
+                    <td><a href="" th:href="@{/admin/product/update/{id}(id=${product.id})}"
+                            class="btn btn-warning">Update</a></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js'></script>
+    <script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/FitText.js/1.1/jquery.fittext.min.js'></script>
+</body>
+
+</html>
